@@ -41,7 +41,7 @@ class sortingTests {
         assertEquals(actual,list);
     }
     @Test
-    void mergeSort() {
+    void mergeSort(){
         ArrayList<Integer> list= new ArrayList<>();
         list.add(4);
         list.add(5);
@@ -54,7 +54,7 @@ class sortingTests {
         actual.add(5);
         actual.add(6);
         actual.add(14);
-        list=MergeSort.sort(list);
+        list=MergeSort.sort(list,true);
         assertEquals(actual,list);
     }
 }

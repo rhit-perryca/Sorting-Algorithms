@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         ArrayList<Integer> list = randomArray();
         System.out.println(list);
-        list=SelectionSort.sort(list);
+        list=MergeSort.sort(list,true);
         System.out.println(list);
     }
     public static ArrayList<Integer> randomArray(){
         Random rnd = new Random();
         ArrayList<Integer> arr = new ArrayList<>();
-        int size=rnd.nextInt(21)+3;
+        int size=rnd.nextInt(11)+10;
         for(int i=0;i<size;i++){
             arr.add(rnd.nextInt(21)+3);
         }

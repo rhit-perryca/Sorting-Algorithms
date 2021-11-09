@@ -1,40 +1,58 @@
 import java.util.ArrayList;
 
 public class MergeSort {
-    public static ArrayList<Integer> merge(ArrayList<Integer> f, ArrayList<Integer>l){
+    public static ArrayList<Integer> merge(ArrayList<Integer> f, ArrayList<Integer> l) {
         ArrayList<Integer> list = new ArrayList<>();
-        while(f.size()!=0&&l.size()!=0){
-            if(f.get(0)<l.get(0)){
+        while (f.size() != 0 && l.size() != 0) {
+            if (f.get(0) < l.get(0)) {
                 list.add(f.get(0));
                 f.remove(0);
-            }
-            else if(f.get(0)>l.get(0)){
+            } else if (f.get(0) > l.get(0)) {
                 list.add(l.get(0));
                 l.remove(0);
-            }
-            else if(f.get(0)==l.get(0)){
+            } else if (f.get(0) == l.get(0)) {
                 list.add(f.get(0));
                 list.add(l.get(0));
                 l.remove(0);
                 f.remove(0);
             }
         }
-        if(f.size()!=0){
+        if (f.size() != 0) {
             list.addAll(f);
         }
-        if(l.size()!=0){
+        if (l.size() != 0) {
             list.addAll(l);
         }
         return list;
     }
-    public static ArrayList<Integer> sort(ArrayList<Integer> in) {
+
+    public static ArrayList<Integer> sort(ArrayList<Integer> in,boolean multiThreaded) {
         if (in.size() != 1) {
-            ArrayList<Integer> f=new ArrayList<>();
-            ArrayList<Integer> l=new ArrayList<>();
-            splitArray(in,f,l);
-            f=sort(f);
-            l=sort(l);
-            return merge(f,l);
+            ArrayList<Integer> f = new ArrayList<>();
+            ArrayList<Integer> l = new ArrayList<>();
+            splitArray(in, f, l);
+            if(multiThreaded){
+                SortingThread fSort = new SortingThread(f);
+                SortingThread lSort = new SortingThread(l);
+                Thread fThread = new Thread(fSort);
+                Thread lThread = new Thread(lSort);
+                fThread.start();
+                lThread.start();
+                try {
+                    lThread.join();
+                    fThread.join();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                f = fSort.getList();
+                l = lSort.getList();
+            }else{
+                f=sort(f,false);
+                l=sort(l,false);
+            }
+
+            in = merge(f, l);
+            return in;
         }
         return in;
     }
