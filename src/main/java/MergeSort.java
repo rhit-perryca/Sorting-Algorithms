@@ -1,32 +1,17 @@
 import java.util.ArrayList;
 
+/**
+ * Class to use merge sort to sort array of integers
+ */
 public class MergeSort {
+    /**
+     * Merge two arrays
+     * @param f first array
+     * @param l last array
+     * @param logging true if logging
+     * @return List of f and l combined and sorted
+     */
     public static ArrayList<Integer> merge(ArrayList<Integer> f, ArrayList<Integer> l,boolean logging) {
-        /*
-        ArrayList<Integer> list = new ArrayList<>();
-        while (f.size() != 0 && l.size() != 0) {
-            if (f.get(0) < l.get(0)) {
-                list.add(f.get(0));
-                f.remove(0);
-            } else if (f.get(0) > l.get(0)) {
-                list.add(l.get(0));
-                l.remove(0);
-            } else if (f.get(0) == l.get(0)) {
-                list.add(f.get(0));
-                list.add(l.get(0));
-                l.remove(0);
-                f.remove(0);
-            }
-        }
-        if (f.size() != 0) {
-            list.addAll(f);
-        }
-        if (l.size() != 0) {
-            list.addAll(l);
-        }
-        return list;
-        */
-        ///*
         ArrayList<Integer> list = new ArrayList<>();
         if(logging)
             System.out.println("Merging "+l+" and "+f);
@@ -63,6 +48,13 @@ public class MergeSort {
         //*/
     }
 
+    /**
+     * Merge sort
+     * @param in array to sort
+     * @param multiThreaded use multi threading
+     * @param logging logging
+     * @return
+     */
     public static ArrayList<Integer> sort(ArrayList<Integer> in,boolean multiThreaded,boolean logging) {
         if (in.size() != 1) {
             ArrayList<Integer> f = new ArrayList<>();
@@ -96,6 +88,12 @@ public class MergeSort {
         return in;
     }
 
+    /**
+     * Splits array down the middle into two arrays
+     * @param in input array
+     * @param first first half of array
+     * @param last last part of array
+     */
     public static void splitArray(ArrayList<Integer> in, ArrayList<Integer> first, ArrayList<Integer> last) {
         int index = 0;
         int splitIndex = (in.size() / 2) - 1;

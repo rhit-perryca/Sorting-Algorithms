@@ -5,18 +5,25 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Double> sizes = new ArrayList<>();
         ArrayList<Double> percents = new ArrayList<>();
-        for (int i = 1; i <= 50; i++) {
-            measureTimeDif(i * 100, sizes, percents, 10);
+        for (int i = 1; i <= 200; i++) {
+            measureTimeDif(i * 100, sizes, percents, 5);
         }
         GraphDifs chart = new GraphDifs("Graph", sizes, percents);
         chart.pack();
         chart.setVisible(true);
     }
 
+    /**
+     * Runs merge sort single threaded and multithreaded multiple times and finds the average difference between the two
+     * @param arraySize Size of the array to sort
+     * @param sortSize Array to put data point of array sizes into
+     * @param percentageBeat Array to put data point of percentages into
+     * @param runCount How many times to average the percentage
+     */
     public static void measureTimeDif(int arraySize, ArrayList<Double> sortSize, ArrayList<Double> percentageBeat, int runCount) {
         double percentSum = 0;
         for (int i = 0; i < runCount; i++) {
-            ArrayList<Integer> list = randomArray(arraySize);
+            ArrayList<Integer> list = getArray(arraySize);
             ArrayList<Integer> list1 = (ArrayList<Integer>) list.clone();
 
             //start timer for single threaded
@@ -66,7 +73,12 @@ public class Main {
         /*System.out.println("Multi is "+roundedPercent+"% faster than single threaded");*/
     }
 
-    public static ArrayList<Integer> randomArray(int range) {
+    /**
+     * Gets an array with numbers from 1-range
+     * @param range Top end of numbers to generate
+     * @return Array of numbers
+     */
+    public static ArrayList<Integer> getArray(int range) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 1; i <= range; i++) {
             list.add(i);
@@ -75,6 +87,10 @@ public class Main {
         return list;
     }
 
+    /**
+     * Shuffles array
+     * @param list array list to shuffle
+     */
     private static void shuffle(ArrayList<Integer> list) {
         Random rnd = new Random();
         for (int i = 0; i < list.size(); i++) {
@@ -84,21 +100,6 @@ public class Main {
             list.set(index, oldNum);
             list.set(i, newNum);
         }
-    }
-
-    public static boolean isSorted(ArrayList<Integer> in) {
-        int prev = Integer.MIN_VALUE;
-        for (int i : in) {
-            if (i < prev) {
-                return false;
-            }
-            prev = i;
-        }
-        return true;
-    }
-
-    public static int getLast(ArrayList<Integer> in) {
-        return in.get(in.size() - 1);
     }
 
 }
