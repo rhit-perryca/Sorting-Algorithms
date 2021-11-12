@@ -1,2 +1,3 @@
 rootProject.name = 'SortingTest'
+include 'Sort'
 

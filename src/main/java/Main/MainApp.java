@@ -1,11 +1,15 @@
+package Main;
+
+import Graphing.CreateGraphs;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Main {
+public class MainApp {
     public static void main(String[] args) {
         //graphMergeSortTime(200,100,100,true);
         //graphMergeSortTime(200,100,100,false);
-        CreateGraphs.graphMergeSortDif(200,100,50,false,true);
+        CreateGraphs.graphMergeSortTime(200,10,10,true,new ArrayList<>(),new ArrayList<>(),true,true);
     }
 
 

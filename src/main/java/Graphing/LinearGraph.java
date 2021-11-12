@@ -1,18 +1,12 @@
+package Graphing;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.DefaultXYDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.chart.ChartUtils;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -21,15 +15,13 @@ public class LinearGraph extends JFrame {
     final int windowW = 500;
     final int windowH = 270;
 
-    public LinearGraph(String applicationTitle, String XaxisName, String yAxisName, String graphName, String dataSetName, ArrayList<Double> x, ArrayList<Double> y, boolean saveToPng) {
+    public LinearGraph(String applicationTitle,String graphName, String XaxisName, String yAxisName,  Dataset data, boolean saveToPng) {
         super(applicationTitle);
         //Creates a sample dataset
-        XYSeries s = new XYSeries(dataSetName);
-        for (int i = 0; i < x.size(); i++) {
-            s.add(x.get(i), y.get(i));
-        }
         DefaultXYDataset dataset = new DefaultXYDataset();
-        dataset.addSeries("Merge sort single vs multi", s.toArray());
+        if(data.isFindFitLine())
+            dataset.addSeries(data.getRegLine().name,data.getRegLine().getData().toArray());
+        dataset.addSeries(data.getName(), data.getData().toArray());
         // based on the dataset we create the chart
         JFreeChart chart = ChartFactory.createXYLineChart(graphName, XaxisName, yAxisName, dataset);
         // Adding chart into a chart panel
@@ -42,7 +34,9 @@ public class LinearGraph extends JFrame {
         if (saveToPng) {
             OutputStream out = null;
             try {
-                out = new FileOutputStream(graphName.replace(' ', '_') + ".png");
+                String name =graphName.replace('\n',' ');
+                name=name.replace(' ','_');
+                out = new FileOutputStream(name + ".png");
                 ChartUtils.writeChartAsPNG(out,
                         chart,
                         windowW,
@@ -61,21 +55,14 @@ public class LinearGraph extends JFrame {
         }
     }
 
-    public LinearGraph(String applicationTitle, String XaxisName, String yAxisName, String graphName, ArrayList<String> dataSetNames, ArrayList<ArrayList<Double>> x, ArrayList<ArrayList<Double> >y, boolean saveToPng) {
+    public LinearGraph(String applicationTitle, String graphName,String XaxisName, String yAxisName,  ArrayList<Dataset> data, boolean saveToPng) {
         super(applicationTitle);
         //Creates a sample dataset
-        ArrayList<XYSeries> lines = new ArrayList<>();
-        for (int i = 0; i < x.size(); i++) {
-            XYSeries s = new XYSeries(dataSetNames.get(i));
-            for (int j = 0; j < x.get(i).size(); j++) {
-                s.add(x.get(i).get(j), y.get(i).get(j));
-            }
-            lines.add(s);
-        }
         DefaultXYDataset dataset = new DefaultXYDataset();
-        for(int i=0;i<dataSetNames.size();i++){
-            dataset.addSeries(dataSetNames.get(i), lines.get(i).toArray());
-
+        for(Dataset d:data){
+            dataset.addSeries(d.getName(), d.getData().toArray());
+            if(d.isFindFitLine())
+                dataset.addSeries(d.getRegLine().name,d.getRegLine().getData().toArray());
         }
         // based on the dataset we create the chart
         JFreeChart chart = ChartFactory.createXYLineChart(graphName, XaxisName, yAxisName, dataset);

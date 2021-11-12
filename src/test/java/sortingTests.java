@@ -1,3 +1,6 @@
+import Sort.InsertionSort;
+import Sort.MergeSort;
+import Sort.SelectionSort;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ class sortingTests {
         actual.add(5);
         actual.add(6);
         actual.add(14);
-        list=InsertionSort.sort(list);
+        list= InsertionSort.sort(list);
         assertEquals(actual,list);
     }
     @Test
@@ -37,7 +40,7 @@ class sortingTests {
         actual.add(5);
         actual.add(6);
         actual.add(14);
-        list=SelectionSort.sort(list);
+        list= SelectionSort.sort(list);
         assertEquals(actual,list);
     }
     @Test
@@ -54,7 +57,7 @@ class sortingTests {
         actual.add(5);
         actual.add(6);
         actual.add(14);
-        list=MergeSort.sort(list,false,false);
+        list= MergeSort.sort(list,false,false);
         assertEquals(actual,list);
     }
 }
