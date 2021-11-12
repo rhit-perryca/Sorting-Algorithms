@@ -3,16 +3,49 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Double> sizes = new ArrayList<>();
-        ArrayList<Double> percents = new ArrayList<>();
-        for (int i = 1; i <= 200; i++) {
-            measureTimeDif(i * 100, sizes, percents, 5);
+        //graphMergeSortTime(200,100,100,true);
+        //graphMergeSortTime(200,100,100,false);
+        graphMergeSortDif(200,100,10,true);
+    }
+    public static void graphMergeSortTime(int runCount, int increment,int avgRuns,boolean multiThreaded,boolean saveImg){
+        ArrayList<Double> x = new ArrayList<>();
+        ArrayList<Double> y = new ArrayList<>();
+        for (int i = 1; i <= runCount; i++) {
+            measureTime(i*increment,x,y,avgRuns,multiThreaded);
+            double percentDone = (double) i/(double) runCount;
+            double roundedPercent = (Math.round(percentDone * 100.0) / 100.0)*100.0;
+            System.out.println(roundedPercent+"%");
         }
-        GraphDifs chart = new GraphDifs("Graph", sizes, percents);
+        LinearGraph chart = new LinearGraph("Graph","Array size","Time(ms)","Merge sort time \nMultithreaded: "+multiThreaded,"Line", x, y,saveImg);
         chart.pack();
         chart.setVisible(true);
     }
-
+    public static void graphMergeSortDif(int runCount, int increment,int avgRuns,boolean saveImg){
+        ArrayList<Double> x = new ArrayList<>();
+        ArrayList<Double> y = new ArrayList<>();
+        for (int i = 1; i <= runCount; i++) {
+            measureTimeDif(i*increment,x,y,avgRuns);
+            double percentDone = (double) i/(double) runCount;
+            double roundedPercent = (Math.round(percentDone * 100.0) / 100.0)*100.0;
+            System.out.println(roundedPercent+"%");
+        }
+        LinearGraph chart = new LinearGraph("Graph","Array size","Merge sort multi vs single(%)","Merge sort time vs single speed" ,"Line", x, y,saveImg);
+        chart.pack();
+        chart.setVisible(true);
+    }
+    public static void measureTime(int arraySize,ArrayList<Double> sortSize, ArrayList<Double> times,int runCount,boolean multiThreaded){
+        double timeSum = 0;
+        for(int i =0;i<runCount;i++){
+            ArrayList<Integer> list = getArray(arraySize);
+            long singleStart = System.nanoTime()/1000000;
+            list = MergeSort.sort(list, multiThreaded, false);
+            long end = System.nanoTime()/1000000;
+            long dif=end-singleStart;
+            timeSum+=dif;
+        }
+        sortSize.add((double)arraySize);
+        times.add(timeSum/runCount);
+    }
     /**
      * Runs merge sort single threaded and multithreaded multiple times and finds the average difference between the two
      * @param arraySize Size of the array to sort
