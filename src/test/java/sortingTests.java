@@ -54,7 +54,7 @@ class sortingTests {
         actual.add(5);
         actual.add(6);
         actual.add(14);
-        list=MergeSort.sort(list,true);
+        list=MergeSort.sort(list,false,false);
         assertEquals(actual,list);
     }
 }
