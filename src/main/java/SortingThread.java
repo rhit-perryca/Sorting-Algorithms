@@ -17,11 +17,16 @@ public class SortingThread extends Thread {
         this.logging=logging;
     }
 
+    public ArrayList<Integer> getList() {
+        return list;
+    }
+
     /**
      * Run merge sort on thread
      */
     @Override
     public void run() {
-        list=MergeSort.sort(list,false,logging);
+        list=MergeSort.sort(list,false,logging
+        );
     }
 }
