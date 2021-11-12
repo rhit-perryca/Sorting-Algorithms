@@ -8,7 +8,7 @@ public class CreateGraphs {
 
         ArrayList<Double> selectionX = new ArrayList<>();
         ArrayList<Double> selectionY = new ArrayList<>();
-        graohSelectionSortTime(arraySizeCount,increment,avgRuns,selectionX,selectionY,false,false);
+        graphSelectionSortTime(arraySizeCount,increment,avgRuns,selectionX,selectionY,false,false);
         xValues.add(selectionX);
         yValues.add(selectionY);
         names.add("Selection sort");
@@ -80,7 +80,7 @@ public class CreateGraphs {
             graph.setVisible(true);
         }
     }
-    public static void graohSelectionSortTime(int runCount, int increment,int avgRuns,ArrayList<Double> x,ArrayList<Double>y,boolean saveImg,boolean showGraph){
+    public static void graphSelectionSortTime(int runCount, int increment, int avgRuns, ArrayList<Double> x, ArrayList<Double>y,boolean saveImg,boolean showGraph){
         for (int i = 1; i <= runCount; i++) {
             measureSelectionSortTime(i*increment,x,y,avgRuns);
             double percentDone = (double) i/(double) runCount;
@@ -136,28 +136,28 @@ public class CreateGraphs {
             ArrayList<Integer> list1 = (ArrayList<Integer>) list.clone();
 
             //start timer for single threaded
-            long singleStart = System.nanoTime() / 1000000;
+            double singleStart = System.nanoTime() / 1000000.0;
 
             //start sorting
             list1 = MergeSort.sort(list1, false, false);
 
             //end timer
-            long singleEnd = System.nanoTime() / 1000000;
+            double singleEnd = System.nanoTime() / 1000000.0;
 
             //get time spent
-            long totalTimeSingle = singleEnd - singleStart;
+            double totalTimeSingle = singleEnd - singleStart;
 
             //start time on multi
-            long multiStart = System.nanoTime() / 1000000;
+            double multiStart = System.nanoTime() / 1000000;
 
             //start sorting using multithreaded
             list = MergeSort.sort(list, true, false);
 
             //end multi time
-            long multiEnd = System.nanoTime() / 1000000;
+            double multiEnd = System.nanoTime() / 1000000.0;
 
             //get time spent sorting
-            long totalTimeMulti = multiEnd - multiStart;
+            double totalTimeMulti = multiEnd - multiStart;
 
             //print time spent on multi
             /*System.out.println("Total multi: "+totalTimeMulti);
@@ -169,7 +169,7 @@ public class CreateGraphs {
             System.out.println("Total difference(single-multi): "+(totalTimeSingle-totalTimeMulti));*/
 
             //get the percentage
-            double percentage = (((double) totalTimeSingle - (double) totalTimeMulti) / (double) totalTimeMulti) * 100;
+            double percentage = (((double) totalTimeSingle - (double) totalTimeMulti) / (double) totalTimeMulti);
 
             //round percentage)
             double roundedPercent = Math.round(percentage * 100.0) / 100.0;
@@ -177,7 +177,8 @@ public class CreateGraphs {
         }
 
         sortSize.add((double) arraySize);
-        percentageBeat.add(percentSum / runCount);
+        double avg = percentSum/runCount;
+        percentageBeat.add(avg);
         //print rounded percentage
         /*System.out.println("Multi is "+roundedPercent+"% faster than single threaded");*/
     }
