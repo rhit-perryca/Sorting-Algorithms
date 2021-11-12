@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         //graphMergeSortTime(200,100,100,true);
         //graphMergeSortTime(200,100,100,false);
-        CreateGraphs.graphAll(50,100,20,true);
+        CreateGraphs.graphAll(200,100,4,true,true);
     }
 
 

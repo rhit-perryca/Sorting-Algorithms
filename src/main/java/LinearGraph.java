@@ -12,6 +12,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.chart.ChartUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -74,6 +75,7 @@ public class LinearGraph extends JFrame {
         DefaultXYDataset dataset = new DefaultXYDataset();
         for(int i=0;i<dataSetNames.size();i++){
             dataset.addSeries(dataSetNames.get(i), lines.get(i).toArray());
+
         }
         // based on the dataset we create the chart
         JFreeChart chart = ChartFactory.createXYLineChart(graphName, XaxisName, yAxisName, dataset);
