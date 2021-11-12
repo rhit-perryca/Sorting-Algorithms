@@ -2,55 +2,73 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
-    public static void main(String[] args){
-        ArrayList<Integer> list = randomArray(10000000);
-        ArrayList<Integer> list1= (ArrayList<Integer>) list.clone();
-
-        //start timer for single threaded
-        long singleStart = System.nanoTime()/1000;
-
-        //start sorting
-        list1=MergeSort.sort(list1,false,false);
-
-        //end timer
-        long singleEnd = System.nanoTime()/1000;
-
-        //get time spent
-        long totalTimeSingle=singleEnd-singleStart;
-
-        //start time on multi
-        long multiStart = System.nanoTime()/1000;
-
-        //start sorting using multithreaded
-        list=MergeSort.sort(list,true,false);
-
-        //end multi time
-        long multiEnd   = System.nanoTime()/1000;
-
-        //get time spent sorting
-        long totalTimeMulti = multiEnd - multiStart;
-
-        //print time spent on multi
-        System.out.println("Total multi: "+totalTimeMulti);
-
-        //print time spend on single
-        System.out.println("Total single: "+totalTimeSingle);
-
-        //print time diff
-        System.out.println("Total difference(single-multi): "+(totalTimeSingle-totalTimeMulti));
-
-        //get the percentage
-        double percentage = (((double) totalTimeSingle-(double) totalTimeMulti)/(double)totalTimeMulti)*100;
-
-        //round percentage)
-        double roundedPercent = Math.round(percentage * 100.0) / 100.0;
-
-        //print rounded percentage
-        System.out.println("Multi is "+roundedPercent+"% faster than single threaded");
+    public static void main(String[] args) {
+        ArrayList<Double> sizes = new ArrayList<>();
+        ArrayList<Double> percents = new ArrayList<>();
+        for (int i = 1; i <= 50; i++) {
+            measureTimeDif(i * 100, sizes, percents, 10);
+        }
+        GraphDifs chart = new GraphDifs("Graph", sizes, percents);
+        chart.pack();
+        chart.setVisible(true);
     }
-    public static ArrayList<Integer> randomArray(int range){
-        ArrayList<Integer> list  = new ArrayList<>();
-        for(int i = 1; i <= range;i++){
+
+    public static void measureTimeDif(int arraySize, ArrayList<Double> sortSize, ArrayList<Double> percentageBeat, int runCount) {
+        double percentSum = 0;
+        for (int i = 0; i < runCount; i++) {
+            ArrayList<Integer> list = randomArray(arraySize);
+            ArrayList<Integer> list1 = (ArrayList<Integer>) list.clone();
+
+            //start timer for single threaded
+            long singleStart = System.nanoTime() / 1000;
+
+            //start sorting
+            list1 = MergeSort.sort(list1, false, false);
+
+            //end timer
+            long singleEnd = System.nanoTime() / 1000;
+
+            //get time spent
+            long totalTimeSingle = singleEnd - singleStart;
+
+            //start time on multi
+            long multiStart = System.nanoTime() / 1000;
+
+            //start sorting using multithreaded
+            list = MergeSort.sort(list, true, false);
+
+            //end multi time
+            long multiEnd = System.nanoTime() / 1000;
+
+            //get time spent sorting
+            long totalTimeMulti = multiEnd - multiStart;
+
+            //print time spent on multi
+            /*System.out.println("Total multi: "+totalTimeMulti);
+
+            //print time spend on single
+            System.out.println("Total single: "+totalTimeSingle);
+
+            //print time diff
+            System.out.println("Total difference(single-multi): "+(totalTimeSingle-totalTimeMulti));*/
+
+            //get the percentage
+            double percentage = (((double) totalTimeSingle - (double) totalTimeMulti) / (double) totalTimeMulti) * 100;
+
+            //round percentage)
+            double roundedPercent = Math.round(percentage * 100.0) / 100.0;
+            percentSum += roundedPercent;
+        }
+
+        sortSize.add((double) arraySize);
+        percentageBeat.add(percentSum / runCount);
+        //print rounded percentage
+        /*System.out.println("Multi is "+roundedPercent+"% faster than single threaded");*/
+    }
+
+    public static ArrayList<Integer> randomArray(int range) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= range; i++) {
             list.add(i);
         }
         shuffle(list);
@@ -59,12 +77,12 @@ public class Main {
 
     private static void shuffle(ArrayList<Integer> list) {
         Random rnd = new Random();
-        for(int i = 0; i < list.size();i++){
+        for (int i = 0; i < list.size(); i++) {
             int index = rnd.nextInt(list.size());
             int newNum = list.get(index);
             int oldNum = list.get(i);
-            list.set(index,oldNum);
-            list.set(i,newNum);
+            list.set(index, oldNum);
+            list.set(i, newNum);
         }
     }
 
@@ -78,8 +96,9 @@ public class Main {
         }
         return true;
     }
-    public static int getLast(ArrayList<Integer>in){
-        return in.get(in.size()-1);
+
+    public static int getLast(ArrayList<Integer> in) {
+        return in.get(in.size() - 1);
     }
 
 }
