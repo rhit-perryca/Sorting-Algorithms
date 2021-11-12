@@ -4,9 +4,19 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args){
         ArrayList<Integer> list = randomArray();
-        System.out.println(list);
+        ArrayList<Integer> list1= (ArrayList<Integer>) list.clone();
+
+
+        long singleStart = System.nanoTime()/1000;
+        list1=MergeSort.sort(list1,false);
+        long singleEnd = System.nanoTime()/1000;
+        long totalTimeSingle=singleEnd-singleStart;
+
+        long multiStart = System.nanoTime()/1000;
         list=MergeSort.sort(list,true);
-        System.out.println(list);
+        long multiEnd   = System.nanoTime()/1000;
+        long totalTimeMulti = multiEnd - multiStart;
+        System.out.println(totalTimeMulti-totalTimeSingle);
     }
     public static ArrayList<Integer> randomArray(){
         Random rnd = new Random();

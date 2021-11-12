@@ -32,20 +32,20 @@ public class MergeSort {
             ArrayList<Integer> l = new ArrayList<>();
             splitArray(in, f, l);
             if(multiThreaded){
+                long timeS=System.nanoTime();
                 SortingThread fSort = new SortingThread(f);
                 SortingThread lSort = new SortingThread(l);
-                Thread fThread = new Thread(fSort);
-                Thread lThread = new Thread(lSort);
-                fThread.start();
-                lThread.start();
+
+                long timeE=System.nanoTime();
+                long dif =timeE-timeS;
+                fSort.start();
+                lSort.start();
                 try {
-                    lThread.join();
-                    fThread.join();
+                    fSort.join();
+                    lSort.join();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                f = fSort.getList();
-                l = lSort.getList();
             }else{
                 f=sort(f,false);
                 l=sort(l,false);

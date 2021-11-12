@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class SortingThread implements Runnable {
+public class SortingThread extends Thread {
     ArrayList<Integer> list;
 
     public SortingThread(ArrayList<Integer> list) {
