@@ -9,7 +9,7 @@ public class MainApp {
     public static void main(String[] args) {
         //graphMergeSortTime(200,100,100,true);
         //graphMergeSortTime(200,100,100,false);
-        CreateGraphs.graphMergeSortTime(200,10,10,true,new ArrayList<>(),new ArrayList<>(),true,true);
+        CreateGraphs.graphMergeSortTime(20000, 50, 100, true, new ArrayList<>(), new ArrayList<>(), true, true);
     }
 
 
