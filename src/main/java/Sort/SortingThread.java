@@ -1,5 +1,9 @@
 package Sort;
 
+import Sort.Merge.MergeMulti;
+import Sort.Merge.MergeSingle;
+import Sort.Merge.MergeSort;
+
 import java.util.ArrayList;
 
 /**
@@ -7,16 +11,14 @@ import java.util.ArrayList;
  */
 public class SortingThread extends Thread {
     ArrayList<Integer> list;
-    boolean logging;
 
     /**
      * Constructor
      * @param list list to sort
-     * @param logging logging
+     *
      */
-    public SortingThread(ArrayList<Integer> list,boolean logging) {
+    public SortingThread(ArrayList<Integer> list) {
         this.list = list;
-        this.logging=logging;
     }
 
     public ArrayList<Integer> getList() {
@@ -28,7 +30,7 @@ public class SortingThread extends Thread {
      */
     @Override
     public void run() {
-        list=MergeSort.sort(list,false,logging
-        );
+        MergeSingle single = new MergeSingle();
+        list=single.sort(list);
     }
 }

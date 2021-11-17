@@ -2,15 +2,19 @@ package Sort;
 
 import java.util.ArrayList;
 
-public class InsertionSort {
-    public static ArrayList<Integer> sort(ArrayList<Integer>in){
+public class InsertionSort extends SortingAlgorithm {
+    @Override
+    public ArrayList<Integer> sort(ArrayList<Integer> in){
         ArrayList<Integer> list = new ArrayList<>();
         for(int i = 0;i<in.size();i++){
             insert(list,in.get(i));
         }
         return list;
     }
-    public static ArrayList<Integer> insert(ArrayList<Integer> in,int value){
+    public InsertionSort(){
+        name="InsertionSort";
+    }
+    public ArrayList<Integer> insert(ArrayList<Integer> in,int value){
         int prev=Integer.MIN_VALUE;
         for(int i=0;i<in.size();i++){
             int cur=in.get(i);

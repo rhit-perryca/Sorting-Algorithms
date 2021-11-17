@@ -2,13 +2,16 @@ package Sort;
 
 import java.util.ArrayList;
 
-public class SelectionSort {
-    public static ArrayList<Integer> sort(ArrayList<Integer> in){
+public class SelectionSort extends SortingAlgorithm{
+    public ArrayList<Integer> sort(ArrayList<Integer> in){
         ArrayList<Integer> list = new ArrayList<>();
         while(in.size()!=0){
             list.add(getSmallest(in));
         }
         return list;
+    }
+    public SelectionSort(){
+        name="SelectionSort";
     }
     public static int getSmallest(ArrayList<Integer>in){
         int min=Integer.MAX_VALUE;

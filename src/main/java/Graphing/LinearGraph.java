@@ -34,8 +34,16 @@ public class LinearGraph extends JFrame {
         if (saveToPng) {
             OutputStream out = null;
             try {
-                String name =graphName.replace('\n',' ');
-                name=name.replace(' ','_');
+                String name="";
+                for(char c:graphName.toCharArray()){
+                    if(c==' '){
+                        name+='_';
+                    }else if(c==':'){
+                        name+='-';
+                    }else if(c!='\n'){
+                        name+=c;
+                    }
+                }
                 out = new FileOutputStream(name + ".png");
                 ChartUtils.writeChartAsPNG(out,
                         chart,
@@ -53,6 +61,7 @@ public class LinearGraph extends JFrame {
             }
 
         }
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public LinearGraph(String applicationTitle, String graphName,String XaxisName, String yAxisName,  ArrayList<Dataset> data, boolean saveToPng) {
